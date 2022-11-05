@@ -7,13 +7,15 @@ const myArray = [1, 10, 3, 6, 'ArrayElement'];
 
 // console.log(`3: ${}`);
 // console.log(`6: ${}`);
+console.log(`The third element of array is: ${myArray[2]}`);
+console.log(`The fourth element of array is: ${myArray[3]}`);
 
 /**
  *  2. Log type of each element
  */
 
-myArray.forEach(() => {
-    console.log();
+myArray.forEach((elem) => {
+    console.log(typeof elem);
 });
 
 /**
@@ -21,7 +23,7 @@ myArray.forEach(() => {
  *  Should return Boolean
  */
 
-const isNumber = myArray.YOUR_METHOD;
+const isNumber = myArray.every(Number);
 
 console.log({
     isNumber,
@@ -32,7 +34,7 @@ console.log({
  * Should return Boolean
  */
 
-const isBiggerThanFive = myArray.YOUR_METHOD;
+const isBiggerThanFive = myArray.some(elem => elem > 5);
 
 console.log({
     isBiggerThanFive,
@@ -43,7 +45,7 @@ console.log({
  * Should return another Array
  */
 
-const elementsBiggerThanFive = myArray.YOUR_METHOD;
+const elementsBiggerThanFive = myArray.filter(elem => elem > 5);
 
 console.log({
     elementsBiggerThanFive,
@@ -54,7 +56,12 @@ console.log({
  * Should return another Array
  */
 
-const multiplied = myArray.YOUR_METHOD;
+const multiplied = myArray.map(elem => {
+    if (typeof elem === 'number') {
+        return elem * 2;
+    }
+    return elem;
+});
 
 console.log({
     multiplied,
@@ -64,7 +71,12 @@ console.log({
  * 7. Calculate array sum
  */
 
-const sum = myArray.reduce();
+const sum = myArray.reduce((prev, curr) => {
+    if (typeof curr === 'number') {
+        return prev + curr;
+    }
+    return prev;
+});
 
 console.log({
     sum,
@@ -74,8 +86,9 @@ console.log({
  * 8. Sort array in ascending and descending order
  */
 
-const asc = myArray.YOUR_METHOD;
-const desc = myArray.YOUR_METHOD;
+const asc = myArray.filter(el => typeof el === 'number').sort((a, b) => a - b);
+// const desc = asc.reverse();
+const desc = myArray.filter(el => typeof el === 'number').sort((a, b) => b - a);
 
 console.log({
     asc,

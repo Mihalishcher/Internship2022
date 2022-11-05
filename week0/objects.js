@@ -10,14 +10,19 @@ const invoice = {
  * 1. Log firstName and lastName in dot notation and bracket notation
  */
 
-console.log(`First name: `);
-console.log(`Last name: `);
+console.log(`First name: ${invoice.firstName}`);
+console.log(`Last name: ${invoice['lastName']}`);
 
 /**
  * 2. Log Object Keys
  */
 
-const keys = invoice.YOUR_METHOD;
+// Object.prototype.getKeys = function () {
+//     return Object.keys(this);
+// }
+// const keys = invoice.getKeys();
+
+const keys = Object.keys(invoice);
 
 console.log({
     keys,
@@ -27,7 +32,12 @@ console.log({
  * 3. Log Object values
  */
 
-const values = invoice.YOUR_METHOD;
+// Object.prototype.getValues = function () {
+//     return Object.values(this);
+// }
+// const values = invoice.getValues();
+
+const values = Object.values(invoice);
 
 console.log({
     values,
@@ -37,7 +47,12 @@ console.log({
  * 4. Log Object entries
  */
 
-const entries = invoice.YOUR_METHOD;
+// Object.prototype.getEntries = function () {
+//     return Object.entries(this);
+// }
+// const entries = invoice.getEntries();
+
+const entries = Object.entries(invoice);
 
 console.log({
     entries,
@@ -48,10 +63,28 @@ console.log({
  * Please, use more than one solution
  */
 
-const copiedInvoice = {};
+
+// // first solution (good when we don`t have nested objects)
+// const copiedInvoice = Object.assign({}, invoice);
+
+
+// // second solution (good when we don`t have nested objects)
+// const copyObj = function (obj) {
+//     let newObj = {};
+//     for (let key in obj) {
+//         newObj[key] = obj[key];
+//     }
+//     return newObj;
+// }
+// const copiedInvoice = copyObj(invoice);
+
+
+// third solution (nested copy)
+const copiedInvoice = JSON.parse(JSON.stringify(invoice));
 
 console.log({
     copiedInvoice,
+    invoice
 });
 
 /**
@@ -69,3 +102,7 @@ console.log({
 /**
  * 7. Loop through object and log key-values
  */
+
+for (let key in invoice) {
+    console.log(`${key} : ${invoice[key]}`)
+}
