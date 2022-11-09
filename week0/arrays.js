@@ -7,8 +7,8 @@ const myArray = [1, 10, 3, 6, 'ArrayElement'];
 
 // console.log(`3: ${}`);
 // console.log(`6: ${}`);
-console.log(`The third element of array is: ${myArray[2]}`);
-console.log(`The fourth element of array is: ${myArray[3]}`);
+console.log(`The third element of array is: ${myArray.at(2)}`);
+console.log(`The fourth element of array is: ${myArray.at(-2)}`);
 
 /**
  *  2. Log type of each element
