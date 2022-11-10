@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint . --fix --max-warnings=0",
+    "fix": "eslint . --fix",
     "prepare": "husky install"
   },
   "repository": {
