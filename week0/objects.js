@@ -1,9 +1,9 @@
 const invoice = {
-    firstName: 'Node',
-    lastName: 'Developer',
-    createdAt: '2022-10-31T22:50:59.305Z',
-    amount: 150,
-    currency: 'USD',
+  firstName: 'Node',
+  lastName: 'Developer',
+  createdAt: '2022-10-31T22:50:59.305Z',
+  amount: 150,
+  currency: 'USD',
 };
 
 /**
@@ -11,7 +11,7 @@ const invoice = {
  */
 
 console.log(`First name: ${invoice.firstName}`);
-console.log(`Last name: ${invoice['lastName']}`);
+console.log(`Last name: ${invoice.lastName}`);
 
 /**
  * 2. Log Object Keys
@@ -25,7 +25,7 @@ console.log(`Last name: ${invoice['lastName']}`);
 const keys = Object.keys(invoice);
 
 console.log({
-    keys,
+  keys,
 });
 
 /**
@@ -40,7 +40,7 @@ console.log({
 const values = Object.values(invoice);
 
 console.log({
-    values,
+  values,
 });
 
 /**
@@ -55,7 +55,7 @@ console.log({
 const entries = Object.entries(invoice);
 
 console.log({
-    entries,
+  entries,
 });
 
 /**
@@ -63,10 +63,8 @@ console.log({
  * Please, use more than one solution
  */
 
-
 // // first solution (good when we don`t have nested objects)
 // const copiedInvoice = Object.assign({}, invoice);
-
 
 // // second solution (good when we don`t have nested objects)
 // const copyObj = function (obj) {
@@ -78,13 +76,12 @@ console.log({
 // }
 // const copiedInvoice = copyObj(invoice);
 
-
 // third solution (nested copy)
 const copiedInvoice = JSON.parse(JSON.stringify(invoice));
 
 console.log({
-    copiedInvoice,
-    invoice
+  copiedInvoice,
+  invoice,
 });
 
 /**
@@ -95,14 +92,14 @@ console.log({
 copiedInvoice.amount = 300;
 
 console.log({
-    invoice,
-    copiedInvoice,
+  invoice,
+  copiedInvoice,
 });
 
 /**
  * 7. Loop through object and log key-values
  */
 
-for (let key in invoice) {
-    console.log(`${key} : ${invoice[key]}`)
-}
+Object.keys(invoice).forEach((key) => {
+  console.log(`${key} : ${invoice[key]}`);
+});

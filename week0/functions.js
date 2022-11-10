@@ -4,7 +4,7 @@
  */
 
 function sayWho(firstName, lastName) {
-    return `I'm ${firstName} ${lastName}`;
+  return `I'm ${firstName} ${lastName}`;
 }
 
 console.log(sayWho('Mihail', 'Shcherbakov'));
@@ -15,8 +15,8 @@ console.log(sayWho('Mihail', 'Shcherbakov'));
  */
 
 function countSum(...numbers) {
-    return numbers.filter(el => typeof el === 'number')
-        .reduce((prev, curr) => prev + curr);
+  return numbers.filter((el) => typeof el === 'number')
+    .reduce((prev, curr) => prev + curr);
 }
 
 console.log(countSum(4, 5, 23));
@@ -28,13 +28,14 @@ console.log(countSum(1, 2, 'asdad', 'asdasd'));
  */
 
 function countLetters(string, letter) {
-    let result = 0;
-    for (let oneLetter of string) {
-        if (oneLetter === letter) {
-            result++;
-        }
+  let result = 0;
+  Array.from(string).forEach((oneLetter) => {
+    if (oneLetter === letter) {
+      result += 1;
     }
-    return result;
+  });
+
+  return result;
 }
 
 console.log(countLetters('Node developer', 'd'));
@@ -44,7 +45,7 @@ console.log(countLetters('Node developer', 'd'));
  */
 
 function getRandom(start, end) {
-    return Math.floor(Math.random() * (end - start) + start);
+  return Math.floor(Math.random() * (end - start) + start);
 }
 
 console.log(getRandom(0, 10));
