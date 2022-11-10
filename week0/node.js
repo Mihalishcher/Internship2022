@@ -15,7 +15,7 @@ const getData = (path) => {
     }))
     .catch(() => {
       console.log('Sorry, something went wrong...!');
-    })
+    });
 };
 
 getData('users');
