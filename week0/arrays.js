@@ -15,7 +15,7 @@ console.log(`The fourth element of array is: ${myArray.at(-2)}`);
  */
 
 myArray.forEach((elem) => {
-  console.log(typeof elem);
+    console.log(typeof elem);
 });
 
 /**
@@ -26,7 +26,7 @@ myArray.forEach((elem) => {
 const isNumber = myArray.every(Number);
 
 console.log({
-  isNumber,
+    isNumber,
 });
 
 /**
@@ -37,7 +37,7 @@ console.log({
 const isBiggerThanFive = myArray.some((elem) => elem > 5);
 
 console.log({
-  isBiggerThanFive,
+    isBiggerThanFive,
 });
 
 /**
@@ -48,7 +48,7 @@ console.log({
 const elementsBiggerThanFive = myArray.filter((elem) => elem > 5);
 
 console.log({
-  elementsBiggerThanFive,
+    elementsBiggerThanFive,
 });
 
 /**
@@ -57,14 +57,15 @@ console.log({
  */
 
 const multiplied = myArray.map((elem) => {
-  if (typeof elem === 'number') {
-    return elem * 2;
-  }
-  return elem;
+    if (typeof elem === 'number') {
+        return elem * 2;
+    }
+
+    return elem;
 });
 
 console.log({
-  multiplied,
+    multiplied,
 });
 
 /**
@@ -72,14 +73,15 @@ console.log({
  */
 
 const sum = myArray.reduce((prev, curr) => {
-  if (typeof curr === 'number') {
-    return prev + curr;
-  }
-  return prev;
+    if (typeof curr === 'number') {
+        return prev + curr;
+    }
+
+    return prev;
 });
 
 console.log({
-  sum,
+    sum,
 });
 
 /**
@@ -91,6 +93,6 @@ const asc = myArray.filter((el) => typeof el === 'number').sort((a, b) => a - b)
 const desc = myArray.filter((el) => typeof el === 'number').sort((a, b) => b - a);
 
 console.log({
-  asc,
-  desc,
+    asc,
+    desc,
 });

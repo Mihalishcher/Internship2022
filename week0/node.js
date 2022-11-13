@@ -7,15 +7,15 @@ const axios = require('axios');
 const fs = require('fs');
 
 const getData = (path) => {
-  axios.get(`https://jsonplaceholder.typicode.com/${path}`)
-    .then((res) => fs.writeFile(`${path}.json`, JSON.stringify(res.data), (err) => {
-      if (!err) {
-        console.log(`File wrote succesfully: ${path}.json`);
-      }
-    }))
-    .catch(() => {
-      console.log('Sorry, something went wrong...!');
-    });
+    axios.get(`https://jsonplaceholder.typicode.com/${path}`)
+        .then((res) => fs.writeFile(`${path}.json`, JSON.stringify(res.data), (err) => {
+            if (!err) {
+                console.log(`File wrote succesfully: ${path}.json`);
+            }
+        }))
+        .catch(() => {
+            console.log('Sorry, something went wrong...!');
+        });
 };
 
 getData('users');
@@ -29,7 +29,7 @@ getData('uses'); // test
  */
 
 if (process.env.ENV === 'PRODUCTION') {
-  getData('todos');
+    getData('todos');
 } else if (process.env.ENV === 'DEV') {
-  getData('albums');
+    getData('albums');
 }

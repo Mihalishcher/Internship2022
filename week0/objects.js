@@ -1,9 +1,9 @@
 const invoice = {
-  firstName: 'Node',
-  lastName: 'Developer',
-  createdAt: '2022-10-31T22:50:59.305Z',
-  amount: 150,
-  currency: 'USD',
+    firstName: 'Node',
+    lastName: 'Developer',
+    createdAt: '2022-10-31T22:50:59.305Z',
+    amount: 150,
+    currency: 'USD',
 };
 
 /**
@@ -25,7 +25,7 @@ console.log(`Last name: ${invoice.lastName}`);
 const keys = Object.keys(invoice);
 
 console.log({
-  keys,
+    keys,
 });
 
 /**
@@ -40,7 +40,7 @@ console.log({
 const values = Object.values(invoice);
 
 console.log({
-  values,
+    values,
 });
 
 /**
@@ -55,7 +55,7 @@ console.log({
 const entries = Object.entries(invoice);
 
 console.log({
-  entries,
+    entries,
 });
 
 /**
@@ -80,8 +80,8 @@ console.log({
 const copiedInvoice = JSON.parse(JSON.stringify(invoice));
 
 console.log({
-  copiedInvoice,
-  invoice,
+    copiedInvoice,
+    invoice,
 });
 
 /**
@@ -92,8 +92,8 @@ console.log({
 copiedInvoice.amount = 300;
 
 console.log({
-  invoice,
-  copiedInvoice,
+    invoice,
+    copiedInvoice,
 });
 
 /**
@@ -101,5 +101,5 @@ console.log({
  */
 
 Object.keys(invoice).forEach((key) => {
-  console.log(`${key} : ${invoice[key]}`);
+    console.log(`${key} : ${invoice[key]}`);
 });
