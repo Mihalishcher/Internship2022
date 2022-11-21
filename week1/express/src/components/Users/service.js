@@ -1,56 +1,38 @@
-const uniqid = require('uniqid');
-const DB = require('./usersDB');
+const bcrypt = require('bcryptjs');
+const User = require('./dbModel');
 
-let usersDB = DB.Users;
+function createUser(body) {
+    const password = bcrypt.hashSync(body.password, 8);
+    const newUser = User({ ...body, password });
 
-function createUser({ name = 'Some name', age = 'Some age' }) {
-    const newUser = {
-        id: uniqid(),
-        name,
-        age,
-    };
-
-    usersDB.push(newUser);
-
-    return newUser;
+    return newUser.save();
 }
 
-function findUsers(id) {
-    if (!id) {
-        return usersDB;
-    }
-
-    const oneUser = usersDB.find((user) => user.id === id);
-
-    if (!oneUser) {
-        throw new Error('No such user');
-    }
-
-    return oneUser;
+function findUser(id) {
+    return User.findById(id);
 }
 
-function updateUser(id, { name, age }) {
-    const updatedUser = findUsers(id);
+function findAllUsers() {
+    return User.find();
+}
 
-    updatedUser.name = name || updatedUser.name;
-    updatedUser.age = age || updatedUser.age;
-
-    usersDB = usersDB.map((user) => (user.id === id ? updatedUser : user));
-
-    return updatedUser;
+function updateUser(id, body) {
+    return User.findByIdAndUpdate(id, body);
 }
 
 function deleteUser(id) {
-    const deletedUser = findUsers(id);
+    return User.findByIdAndDelete(id);
+}
 
-    usersDB = usersDB.filter((user) => user.id !== id);
-
-    return deletedUser;
+function signIn(body) {
+    return User.findOne({ email: body.email });
 }
 
 module.exports = {
     createUser,
-    findUsers,
+    findUser,
+    findAllUsers,
     updateUser,
     deleteUser,
+    signIn,
 };
