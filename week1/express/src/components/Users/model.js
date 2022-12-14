@@ -1,12 +1,14 @@
 const { Schema, model, mongoose } = require('mongoose');
 const bcrypt = require('bcryptjs');
-const connection = require('../../config/connection');
+const connection = require('../../config/mongoConnection');
 
-console.log(connection.MONGO_URI);
+connection.on('connecting', () => {
+    console.log("\x1b[31m", 'MongoDB conecting');
+})
 
-mongoose.connect('mongodb://localhost:27017/internshipOnix2022', (err) => {
-    if (err) throw err;
-});
+connection.on('error', (error) => {
+    console.log("\x1b[31m", `MongoDB error: ${error}`);
+})
 
 const schema = new Schema({
     firstname: {
@@ -38,8 +40,6 @@ const schema = new Schema({
 });
 
 schema.pre('save', function asd(next) {
-    console.log(this.password);
-
     const hash = bcrypt.hashSync(this.password, 8);
 
     this.password = hash;
@@ -49,4 +49,4 @@ schema.pre('save', function asd(next) {
     return this;
 });
 
-module.exports = model('User', schema);
+module.exports = connection.model('User', schema);

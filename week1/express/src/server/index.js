@@ -1,11 +1,11 @@
 const http = require('http');
-// const mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
 const server = require('./server');
 const events = require('./events');
-// const dbConfig = require('../config/dbConfig');
+const dbConfig = require('../config/dbConfig');
 
-const PORT = server.get('port');
+const PORT = server.get('port')
 
 // (async () => {
 //     try {
@@ -19,9 +19,10 @@ const PORT = server.get('port');
 //                 console.error(error);
 //                 process.exit(1);
 //             });
-//     } catch (e) {
-//         console.log(e);
-//     }
-// })();
+//         } catch (e) {
+//             console.log(e);
+//         }
+//     })();
 
 events.bind(http.createServer(server).listen(PORT));
+
