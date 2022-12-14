@@ -1,9 +1,7 @@
-const bcrypt = require('bcryptjs');
-const User = require('./dbModel');
+const User = require('./model');
 
 function createUser(body) {
-    const password = bcrypt.hashSync(body.password, 8);
-    const newUser = User({ ...body, password });
+    const newUser = User({ ...body });
 
     return newUser.save();
 }
@@ -17,7 +15,15 @@ function findAllUsers() {
 }
 
 function updateUser(id, body) {
-    return User.findByIdAndUpdate(id, body);
+    User.findByIdAndUpdate(id, body, (err, user) => {
+        // eslint-disable-next-line no-param-reassign
+        user.password = body.password;
+        user.save();
+
+        return user;
+    });
+
+    return User;
 }
 
 function deleteUser(id) {
