@@ -5,10 +5,20 @@ const MONGODB_NAME = 'internshipOnix2022';
 const MONGO_URI = `${MONGODB_URI}/${MONGODB_NAME}`;
 
 const connectOptions = {
-    // flag to allow users to fall back to the old
-    // parser if they find a bug in the new parse
     useNewUrlParser: true,
     useUnifiedTopology: true,
 };
 
-module.exports = mongoose.createConnection(MONGO_URI, connectOptions);
+const connection = mongoose.createConnection(MONGO_URI, connectOptions);
+
+connection.on('connected', () => {
+    console.log('MongoDB connected!');
+});
+connection.on('disconnected', () => {
+    console.log('MongoDB disconnected!');
+});
+connection.on('error', (error) => {
+    console.log(`MongoDB connection error: ${error}`);
+});
+
+module.exports = connection;

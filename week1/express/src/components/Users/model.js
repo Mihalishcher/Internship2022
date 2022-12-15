@@ -1,14 +1,7 @@
-const { Schema, model, mongoose } = require('mongoose');
+/* eslint-disable no-underscore-dangle */
+const { Schema } = require('mongoose');
 const bcrypt = require('bcryptjs');
 const connection = require('../../config/mongoConnection');
-
-connection.on('connecting', () => {
-    console.log("\x1b[31m", 'MongoDB conecting');
-})
-
-connection.on('error', (error) => {
-    console.log("\x1b[31m", `MongoDB error: ${error}`);
-})
 
 const schema = new Schema({
     firstname: {
@@ -39,14 +32,16 @@ const schema = new Schema({
     },
 });
 
-schema.pre('save', function asd(next) {
-    const hash = bcrypt.hashSync(this.password, 8);
-
-    this.password = hash;
-
+function hashPassword(next) {
+    if (this._update && this._update.password) {
+        this._update.password = bcrypt.hashSync(this._update.password, 8);
+    } else if (this.password) {
+        this.password = bcrypt.hashSync(this.password, 8);
+    }
     next();
+}
 
-    return this;
-});
+schema.pre('save', hashPassword);
+schema.pre('findOneAndUpdate', hashPassword);
 
 module.exports = connection.model('User', schema);
