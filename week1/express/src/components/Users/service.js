@@ -15,7 +15,15 @@ function findAllUsers() {
 }
 
 function updateUser(id, body) {
-    return User.findOneAndUpdate({ _id: id }, body, { new: true });
+    User.findByIdAndUpdate(id, body, (err, user) => {
+        // eslint-disable-next-line no-param-reassign
+        user.password = body.password;
+        user.save();
+
+        return user;
+    });
+
+    return User;
 }
 
 function deleteUser(id) {

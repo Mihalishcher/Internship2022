@@ -4,12 +4,12 @@ const bcrypt = require('bcryptjs');
 const connection = require('../../config/mongoConnection');
 
 const schema = new Schema({
-    firstname: {
+    firstName: {
         type: String,
         trim: true,
         required: true,
     },
-    lastname: {
+    lastName: {
         type: String,
         trim: true,
         required: true,
@@ -18,11 +18,6 @@ const schema = new Schema({
         type: String,
         trim: true,
         unique: true,
-        required: true,
-    },
-    birthYear: {
-        type: Number,
-        trim: true,
         required: true,
     },
     password: {

@@ -80,7 +80,7 @@ async function signIn(req, res) {
             });
         }
 
-        const token = jwt.sign({ id: user.id }, config.secret, { expiresIn: 900 });
+        const token = jwt.sign({ id: user.id }, config.secret, { expiresIn: 9000 });
 
         return res.status(200).json({ id: user.id, token });
     } catch (error) {
