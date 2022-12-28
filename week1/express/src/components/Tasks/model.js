@@ -27,6 +27,10 @@ const schema = new Schema({
         trim: true,
         required: true,
     },
+    status: {
+        type: String,
+        trim: true,
+    },
 });
 
 module.exports = connection.model('Task', schema);

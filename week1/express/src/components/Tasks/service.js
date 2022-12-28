@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const Task = require('./model');
-// const User = require('../Users/model');
 
 function createTask(body, userID) {
     const newTask = Task({ ...body, assignee: userID });
@@ -12,38 +11,15 @@ function findTasks(userID) {
     return Task.find({ assignee: userID });
 }
 
+function findFiveTasks(userID, page) {
+    return Task.find({ assignee: userID }).skip(5 * page).limit(5);
+}
+
 function updateTask(id, body) {
     return Task.findByIdAndUpdate(id, body);
 }
 
 function getAllUsersTasks(userID) {
-    // return User.aggregate([
-    //     {
-    //         $match: {
-    //             _id: new mongoose.Types.ObjectId(userID),
-    //         },
-    //     }, {
-    //         $lookup: {
-    //             from: 'tasks',
-    //             localField: '_id',
-    //             foreignField: 'assignee',
-    //             as: 'tasks',
-    //             pipeline: [
-    //                 {
-    //                     $sort: { estimatedTime: -1 },
-    //                 },
-    //             ],
-    //         },
-    //     }, {
-    //         $project: {
-    //             name: { $concat: ['$firstName', ' ', '$lastName'] },
-    //             tasks: 1,
-    //             _id: 0,
-    //             totalTasks: { $size: '$tasks' },
-    //             totalEstimation: { $sum: '$tasks.estimatedTime' },
-    //         },
-    //     },
-    // ]);
     return Task.aggregate([
         {
             $match: {
@@ -58,6 +34,7 @@ function getAllUsersTasks(userID) {
                 _id: { _id: '$assignee' },
                 tasks: {
                     $push: {
+                        _id: '$_id',
                         assignee: '$assignee',
                         title: '$title',
                         description: '$description',
@@ -92,6 +69,7 @@ function getAllUsersTasks(userID) {
 module.exports = {
     createTask,
     findTasks,
+    findFiveTasks,
     updateTask,
     getAllUsersTasks,
 };

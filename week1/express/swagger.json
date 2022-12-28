@@ -1,0 +1,424 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Onix Internship",
+        "description": "REST API swagger documentation with Authorization",
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        }
+    },
+    "host": "localhost:3000",
+    "basePath": "/v1",
+    "securityDefinitions": {
+        "Authorization": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header - Authorization",
+            "description": "Input format: | Bearer YOUR_TOKEN | "
+        }
+    },
+    "security": [
+        {
+            "Authorization": []
+        }
+    ],
+    "tags": [
+        {
+            "name": "Tasks collection",
+            "description": "User tasks to do"
+        }
+    ],
+    "paths": {
+        "/users/sign-in": {
+            "post": {
+                "tags": [
+                    "Sign-in / Authorization"
+                ],
+                "summary": "Authorization to get Bearer token",
+                "parameters": [
+                    {
+                        "name": "user login",
+                        "in": "body",
+                        "description": "Email and password of created user",
+                        "schema": {
+                            "$ref": "#/definitions/sign-in"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Recived new token",
+                        "schema": {
+                            "$ref": "#/definitions/token"
+                        }
+                    }
+                }
+            }
+        },
+        "/task/all": {
+            "get": {
+                "tags": [
+                    "Get all tasks"
+                ],
+                "summary": "Get all tasks of user",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/tasksAll"
+                        }
+                    }
+                }
+            }
+        },
+        "/task": {
+            "get": {
+                "tags": [
+                    "Get five tasks"
+                ],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "page",
+                        "schema": {
+                            "type": "number"
+                        },
+                        "required": true,
+                        "description": "User tasks page number"
+                    }
+                ],
+                "summary": "Get five user tasks",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/fiveTasks"
+                        }
+                    }
+                }
+            }
+        },
+        "/task/": {
+            "post": {
+                "summary": "Create new task for user",
+                "tags": [
+                    "Create task"
+                ],
+                "description": "Create new user task",
+                "parameters": [
+                    {
+                        "name": "task",
+                        "in": "body",
+                        "description": "Task that we want to create",
+                        "schema": {
+                            "$ref": "#/definitions/createTask"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "New task is created",
+                        "schema": {
+                            "$ref": "#/definitions/tasks"
+                        }
+                    }
+                }
+            }
+        },
+        "/task/{id}": {
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "description": "ID of task that we want to find",
+                    "type": "string"
+                }
+            ],
+            "patch": {
+                "summary": "Update task with give ID",
+                "tags": [
+                    "Update task"
+                ],
+                "parameters": [
+                    {
+                        "name": "task",
+                        "in": "body",
+                        "description": "Task with new estimated time",
+                        "schema": {
+                            "$ref": "#/definitions/updateTasks"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Task is updated",
+                        "schema": {
+                            "$ref": "#/definitions/tasks"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "sign-in": {
+            "required": [
+                "email",
+                "password"
+            ],
+            "properties": {
+                "email": {
+                    "type": "email",
+                    "trim": true,
+                    "example": "www@mail.com"
+                },
+                "password": {
+                    "type": "string",
+                    "trim": true,
+                    "example": "12345678"
+                }
+            }
+        },
+        "token": {
+            "required": [
+                "_id",
+                "token"
+            ],
+            "properties": {
+                "_id": {
+                    "type": "string",
+                    "trim": true,
+                    "example": "63ab65baa9702dd3f93840c9"
+                },
+                "token": {
+                    "type": "string",
+                    "trim": true,
+                    "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYWI2NWJhYTk3MDJkZDNmOTM4NDBjOSIsImlhdCI6MTY3MjE5MjQ1OCwiZXhwIjoxNjcyMjAxNDU4fQ.FuoUee_XPc8pqg5qD2-0myHZBK0hwUjjVmkUS_CyLy4"
+                }
+            }
+        },
+        "tasks": {
+            "required": [
+                "_id",
+                "assignee",
+                "title",
+                "description",
+                "estimatedTime",
+                "createdBy"
+            ],
+            "properties": {
+                "_id": {
+                    "type": "string",
+                    "uniqueItems": true,
+                    "example": "63ab65baa9702dd3f93840c9"
+                },
+                "assignee": {
+                    "type": "Schema.Types.ObjectId",
+                    "trim": true,
+                    "example": "63ab7a16a457645a850f14a8"
+                },
+                "title": {
+                    "type": "string",
+                    "trim": true,
+                    "example": "Some title"
+                },
+                "description": {
+                    "type": "string",
+                    "trim": true,
+                    "example": "Some description"
+                },
+                "estimatedTime": {
+                    "type": "number",
+                    "trim": true,
+                    "example": 8
+                },
+                "createdBy": {
+                    "type": "string",
+                    "trim": true,
+                    "example": "Project Manager"
+                },
+                "status": {
+                    "type": "string",
+                    "trim": true,
+                    "example": "Done / In progress"
+                }
+            }
+        },
+        "createTask": {
+            "required": [
+                "title",
+                "description",
+                "estimatedTime",
+                "createdBy"
+            ],
+            "properties": {
+                "title": {
+                    "type": "string",
+                    "trim": true,
+                    "example": "Some title"
+                },
+                "description": {
+                    "type": "string",
+                    "trim": true,
+                    "example": "Some description"
+                },
+                "estimatedTime": {
+                    "type": "number",
+                    "trim": true,
+                    "example": 8
+                },
+                "createdBy": {
+                    "type": "string",
+                    "trim": true,
+                    "example": "Project Manager"
+                }
+            }
+        },
+        "updateTasks": {
+            "required": [
+                "estimatedTime"
+            ],
+            "properties": {
+                "estimatedTime": {
+                    "type": "number",
+                    "trim": true,
+                    "example": 9
+                }
+            }
+        },
+        "tasksAll": {
+            "required": [
+                "tasks"
+            ],
+            "properties": {
+                "tasks": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "_id": {
+                                "type": "string",
+                                "uniqueItems": true,
+                                "example": "63ab65baa9702dd3f93840c9"
+                            },
+                            "assignee": {
+                                "type": "Schema.Types.ObjectId",
+                                "trim": true,
+                                "example": "63ab7a16a457645a850f14a8"
+                            },
+                            "title": {
+                                "type": "string",
+                                "trim": true,
+                                "example": "Some title"
+                            },
+                            "description": {
+                                "type": "string",
+                                "trim": true,
+                                "example": "Some description"
+                            },
+                            "estimatedTime": {
+                                "type": "number",
+                                "trim": true,
+                                "example": 8
+                            },
+                            "createdBy": {
+                                "type": "string",
+                                "trim": true,
+                                "example": "Project Manager"
+                            },
+                            "status": {
+                                "type": "string",
+                                "trim": true,
+                                "example": "Done or In progress"
+                            }
+                        }
+                    }
+                },
+                "name": {
+                    "type": "string",
+                    "example": "Jogn Doe"
+                },
+                "totalTasks": {
+                    "type": "number",
+                    "example": 15
+                },
+                "totalEstimation": {
+                    "type": "number",
+                    "example": 777
+                }
+            }
+        },
+        "fiveTasks": {
+            "required": [
+                "tasks"
+            ],
+            "properties": {
+                "tasks": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "_id": {
+                                "type": "string",
+                                "uniqueItems": true,
+                                "example": "63ab65baa9702dd3f93840c9"
+                            },
+                            "assignee": {
+                                "type": "Schema.Types.ObjectId",
+                                "trim": true,
+                                "example": "63ab7a16a457645a850f14a8"
+                            },
+                            "title": {
+                                "type": "string",
+                                "trim": true,
+                                "example": "Some title"
+                            },
+                            "description": {
+                                "type": "string",
+                                "trim": true,
+                                "example": "Some description"
+                            },
+                            "estimatedTime": {
+                                "type": "number",
+                                "trim": true,
+                                "example": 8
+                            },
+                            "createdBy": {
+                                "type": "string",
+                                "trim": true,
+                                "example": "Project Manager"
+                            },
+                            "status": {
+                                "type": "string",
+                                "trim": true,
+                                "example": "Done or In progress"
+                            }
+                        }
+                    }
+                },
+                "totalTasks": {
+                    "type": "number",
+                    "example": 15
+                }
+            }
+        }
+    },
+    "schemes": [
+        "http"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ]
+}

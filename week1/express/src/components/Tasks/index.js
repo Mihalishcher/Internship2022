@@ -16,11 +16,10 @@ async function getTasks(req, res) {
     try {
         const { page } = req.query;
 
-        const allTasks = await taskService.findTasks(req.user.id);
-        const totalTasks = allTasks.length;
-        const fiveTasks = allTasks.splice((5 * page), 5);
+        const totalTasks = await taskService.findTasks(req.user.id);
+        const tasks = await taskService.findFiveTasks(req.user.id, page);
 
-        return res.status(200).json({ fiveTasks, totalTasks });
+        return res.status(200).json({ tasks, totalTasks: totalTasks.length });
     } catch (error) {
         return res.status(500).json({
             error: error.message,
@@ -30,7 +29,7 @@ async function getTasks(req, res) {
 
 async function updateTask(req, res) {
     try {
-        const user = await taskService.updateTask(req.user.id);
+        const user = await taskService.updateTask(req.params.id, req.body);
 
         return res.status(201).json(user);
     } catch (error) {
@@ -44,7 +43,7 @@ async function getAllUsersTasks(req, res) {
     try {
         const tasks = await taskService.getAllUsersTasks(req.user.id);
 
-        return res.status(201).json(tasks);
+        return res.status(200).json(tasks);
     } catch (error) {
         return res.status(500).json({
             error: error.message,
