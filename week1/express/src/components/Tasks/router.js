@@ -12,6 +12,10 @@ router.post('/', JWTcheck, validationMiddleware(schemas.createTask, 'body'), tas
 
 router.patch('/:id', JWTcheck, validationMiddleware(schemas.updateTask, 'body'), taskComponent.updateTask);
 
+router.delete('/:id', JWTcheck, validationMiddleware(schemas.checkID, 'params'), taskComponent.deleteTask);
+
+router.delete('/', JWTcheck, taskComponent.deleteAllTasks);
+
 router.get('/all', JWTcheck, taskComponent.getAllUsersTasks);
 
 module.exports = router;

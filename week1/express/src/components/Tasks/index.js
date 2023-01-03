@@ -51,9 +51,35 @@ async function getAllUsersTasks(req, res) {
     }
 }
 
+async function deleteTask(req, res) {
+    try {
+        const tasks = await taskService.deleteTask(req.params.id);
+
+        return res.status(200).json(tasks);
+    } catch (error) {
+        return res.status(500).json({
+            error: error.message,
+        });
+    }
+}
+
+async function deleteAllTasks(req, res) {
+    try {
+        const tasks = await taskService.deleteAllTasks(req.user.id);
+
+        return res.status(200).json(tasks);
+    } catch (error) {
+        return res.status(500).json({
+            error: error.message,
+        });
+    }
+}
+
 module.exports = {
     createTask,
     getTasks,
     updateTask,
     getAllUsersTasks,
+    deleteTask,
+    deleteAllTasks,
 };

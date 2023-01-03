@@ -10,6 +10,9 @@ const schemas = {
     updateTask: Joi.object().keys({
         estimatedTime: Joi.number().required(),
     }),
+    checkID: Joi.object().keys({
+        id: Joi.string().alphanum(),
+    }),
 };
 
 module.exports = schemas;

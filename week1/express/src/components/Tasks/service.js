@@ -18,6 +18,12 @@ function findFiveTasks(userID, page) {
 function updateTask(id, body) {
     return Task.findByIdAndUpdate(id, body);
 }
+function deleteTask(id) {
+    return Task.findOneAndDelete({ _id: id });
+}
+function deleteAllTasks(id) {
+    return Task.deleteMany({ assignee: id });
+}
 
 function getAllUsersTasks(userID) {
     return Task.aggregate([
@@ -72,4 +78,6 @@ module.exports = {
     findFiveTasks,
     updateTask,
     getAllUsersTasks,
+    deleteTask,
+    deleteAllTasks,
 };
