@@ -138,9 +138,36 @@ describe('Tasks component', () => {
                 });
         });
     });
+    describe('\x1b[36mPATCH /v1/task/:id', () => {
+        it('\x1b[32mit should update estimated time', (done) => {
+            chai.request(server)
+                .patch(`/v1/task/${taskId}`)
+                .set({ Authorization: `Bearer ${token}` })
+                .send({ estimatedTime: 2 })
+                .end((error, res) => {
+                    res.should.have.status(201);
+                    res.body.should.be.a('object');
+                    res.body.should.have.property('assignee').and.to.be.a('string');
+                    res.body.should.have.property('title').and.to.be.a('string');
+                    res.body.should.have.property('description').and.to.be.a('string');
+                    res.body.should.have.property('createdBy').and.to.be.a('string');
+                    res.body.should.have.property('estimatedTime').and.to.be.a('number');
+                    done();
+                });
+        });
+
+        it('\x1b[32mit should throw Authorization error', (done) => {
+            chai.request(server)
+                .patch(`/v1/task/${taskId}`)
+                .set({ Authorization: 'Bearer ' })
+                .end((error, res) => {
+                    res.should.have.status(403);
+                    done();
+                });
+        });
+    });
     describe('\x1b[36mDELETE /v1/task/:id', () => {
         it('\x1b[32mit should delete 1 task', (done) => {
-            console.log(taskId);
             chai.request(server)
                 .delete(`/v1/task/${taskId}`)
                 .set({ Authorization: `Bearer ${token}` })
@@ -150,7 +177,7 @@ describe('Tasks component', () => {
                     res.body.should.have.property('assignee').and.to.be.a('string');
                     res.body.should.have.property('title').and.to.be.a('string');
                     res.body.should.have.property('description').and.to.be.a('string');
-                    res.body.should.have.property('estimatedTime').and.to.be.a('number').to.equal(6);
+                    res.body.should.have.property('estimatedTime').and.to.be.a('number').to.equal(2);
                     res.body.should.have.property('createdBy').and.to.be.a('string');
                     done();
                 });
